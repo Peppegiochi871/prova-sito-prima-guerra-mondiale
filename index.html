@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>La Prima Guerra Mondiale</title>
+  <title>La Prima Guerra Mondiale | AI Enhanced</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
   <style>
     * {
@@ -25,6 +25,7 @@
       to { opacity: 1; }
     }
 
+    /* Header */
     header {
       position: fixed;
       top: 0;
@@ -43,6 +44,7 @@
       font-size: 24px;
       cursor: pointer;
       margin-right: 20px;
+      color: #222;
     }
 
     header h1 {
@@ -50,44 +52,70 @@
       font-weight: 600;
     }
 
+    /* Menu Navigazione */
     nav {
       position: fixed;
       top: 0;
-      left: -260px;
-      width: 250px;
+      left: -280px;
+      width: 280px;
       height: 100%;
       background-color: #111;
-      padding-top: 60px;
-      transition: left 0.3s ease;
+      transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 1100;
-    }
-
-    nav a {
-      display: block;
-      padding: 14px 20px;
-      color: #f1f1f1;
-      text-decoration: none;
-      font-size: 15px;
-      border-bottom: 1px solid #222;
-    }
-
-    nav a:hover {
-      background-color: #1f1f1f;
-      padding-left: 30px;
-      transition: all 0.2s ease;
+      box-shadow: 5px 0 15px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
     }
 
     nav.active {
       left: 0;
     }
 
-    /* Modifica al contenitore principale */
-    main {
-      width: 100%;
-      margin-top: 60px; /* Altezza dell'header */
+    .close-menu {
+      align-self: flex-end;
+      font-size: 30px;
+      color: #fff;
+      padding: 15px 20px;
+      cursor: pointer;
+      line-height: 1;
     }
 
-    /* Sezione Hero: sfondo rosso pieno */
+    nav a {
+      display: block;
+      padding: 16px 25px;
+      color: #f1f1f1;
+      text-decoration: none;
+      font-size: 16px;
+      border-bottom: 1px solid #222;
+    }
+
+    nav a:hover {
+      background-color: #1f1f1f;
+      padding-left: 35px;
+      color: #fff;
+    }
+
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      z-index: 1050;
+    }
+
+    .menu-overlay.active {
+      display: block;
+    }
+
+    /* Layout */
+    main {
+      width: 100%;
+      margin-top: 60px;
+    }
+
     .hero {
       min-height: 70vh;
       width: 100%;
@@ -98,70 +126,112 @@
       text-align: center;
       background-color: #8b1e1e;
       padding: 120px 20px;
-      margin-bottom: 100px; /* Sposta i testi sotto più in basso */
-    }
-
-    .hero-title {
-      animation: slideUp 1.2s ease-out;
-    }
-
-    @keyframes slideUp {
-      from { transform: translateY(40px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+      margin-top: -60px;
+      padding-top: 180px; 
+      margin-bottom: 100px;
     }
 
     .hero-title h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 64px;
+      font-size: clamp(40px, 8vw, 64px);
       font-weight: 700;
       color: #ffffff;
       margin-bottom: 10px;
     }
 
-    /* Date rese esplicitamente bianche */
     .hero-title span {
       font-size: 18px;
-      color: #ffffff !important; 
-      letter-spacing: 2px;
+      color: #ffffff !important;
+      letter-spacing: 3px;
       text-transform: uppercase;
       display: block;
     }
 
-    /* Contenitore per le sezioni di testo per mantenerle centrate e strette */
     .content-wrapper {
-      max-width: 900px;
+      max-width: 800px;
       margin: 0 auto;
       padding: 0 20px;
     }
 
     .section {
-      margin-bottom: 60px;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 0.8s ease;
-    }
-
-    .section.visible {
-      opacity: 1;
-      transform: translateY(0);
+      margin-bottom: 80px;
+      position: relative;
     }
 
     .section h3 {
-      font-size: 22px;
-      margin-bottom: 10px;
+      font-size: 26px;
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 15px;
+      color: #111;
+      border-bottom: 2px solid #8b1e1e;
+      display: inline-block;
+      padding-bottom: 5px;
     }
 
-    .section p {
-      color: #444;
+    .ai-controls {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
     }
+
+    .ai-btn {
+      background: #f0f0f0;
+      border: 1px solid #ddd;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.3s;
+    }
+
+    .ai-btn:hover {
+      background: #8b1e1e;
+      color: white;
+      border-color: #8b1e1e;
+    }
+
+    .ai-response {
+      margin-top: 15px;
+      padding: 15px;
+      background: #fdf2f2;
+      border-left: 4px solid #8b1e1e;
+      border-radius: 4px;
+      font-size: 15px;
+      display: none;
+      animation: fadeIn 0.5s;
+    }
+
+    /* Modal per caricamento immagini */
+    #image-ai-section {
+      background: #f9f9f9;
+      padding: 40px;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 80px;
+      border: 2px dashed #ddd;
+    }
+
+    .loading-spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     footer {
       text-align: center;
-      padding: 40px 20px;
+      padding: 50px 20px;
+      background-color: #f9f9f9;
       border-top: 1px solid #e5e5e5;
-      color: #666;
-      font-size: 14px;
-      margin-top: 60px;
+      color: #777;
     }
   </style>
 </head>
@@ -172,18 +242,19 @@
   <h1>Prima Guerra Mondiale</h1>
 </header>
 
+<div class="menu-overlay" id="overlay" onclick="toggleMenu()"></div>
+
 <nav id="menu">
-  <a href="index.html">Home</a>
+  <div class="close-menu" onclick="toggleMenu()">×</div>
+  <a href="#home">Home</a>
   <a href="#cause">Cause</a>
   <a href="#schieramenti">Schieramenti</a>
   <a href="#italia">Italia</a>
   <a href="#fasi">Fasi</a>
   <a href="#pace">La pace</a>
-  <a href="quiz.html">Quiz</a>
 </nav>
 
 <main id="home">
-
   <section class="hero">
     <div class="hero-title">
       <h2>La Grande Guerra</h2>
@@ -192,82 +263,250 @@
   </section>
 
   <div class="content-wrapper">
+    <!-- Sezione Dinamica Caricamento Immagini -->
+    <section id="image-ai-section">
+      <h3>Analisi Reperti ✨</h3>
+      <p style="margin-bottom: 20px;">Carica la foto di un reperto o una mappa per ricevere un'analisi storica dell'IA.</p>
+      <input type="file" id="imageInput" accept="image/*" style="display:none" onchange="analyzeImage(this)">
+      <button class="ai-btn" style="margin: 0 auto; padding: 12px 24px;" onclick="document.getElementById('imageInput').click()">
+        Carica Immagine ✨
+      </button>
+      <div id="image-result" class="ai-response" style="text-align: left; margin-top: 20px;"></div>
+    </section>
+
+    <!-- Sezioni Testuali con AI -->
     <section class="section" id="cause">
       <h3>Origini del conflitto</h3>
-      <p>
+      <p id="text-cause">
         Alla vigilia del 1914 l’Europa era attraversata da profonde tensioni politiche,
         economiche e nazionalistiche. Il fragile equilibrio tra le potenze crollò dopo
         l’attentato di Sarajevo, dando inizio a un conflitto di proporzioni mondiali.
       </p>
+      <div class="ai-controls">
+        <button class="ai-btn" onclick="deepenContent('cause')">Approfondisci ✨</button>
+        <button class="ai-btn" onclick="speakContent('text-cause')">Ascolta ✨</button>
+      </div>
+      <div id="res-cause" class="ai-response"></div>
     </section>
 
     <section class="section" id="schieramenti">
       <h3>Gli schieramenti</h3>
-      <p>
+      <p id="text-schieramenti">
         La guerra vide contrapposti gli Imperi Centrali e la Triplice Intesa,
         coinvolgendo progressivamente numerosi Stati e trasformando una crisi locale
         in una guerra globale.
       </p>
+      <div class="ai-controls">
+        <button class="ai-btn" onclick="deepenContent('schieramenti')">Approfondisci ✨</button>
+        <button class="ai-btn" onclick="speakContent('text-schieramenti')">Ascolta ✨</button>
+      </div>
+      <div id="res-schieramenti" class="ai-response"></div>
     </section>
 
     <section class="section" id="italia">
       <h3>L’Italia nella guerra</h3>
-      <p>
+      <p id="text-italia">
         Dopo una fase di neutralità, l’Italia entrò in guerra nel 1915 a fianco
         dell’Intesa, affrontando un conflitto lungo e logorante soprattutto sul fronte
         alpino.
       </p>
+      <div class="ai-controls">
+        <button class="ai-btn" onclick="deepenContent('italia')">Approfondisci ✨</button>
+        <button class="ai-btn" onclick="speakContent('text-italia')">Ascolta ✨</button>
+      </div>
+      <div id="res-italia" class="ai-response"></div>
     </section>
 
     <section class="section" id="fasi">
       <h3>Le fasi del conflitto</h3>
-      <p>
+      <p id="text-fasi">
         Fallita la guerra lampo, il conflitto si trasformò in una guerra di posizione
         caratterizzata da trincee, logoramento e mobilitazione industriale.
       </p>
+      <div class="ai-controls">
+        <button class="ai-btn" onclick="deepenContent('fasi')">Approfondisci ✨</button>
+        <button class="ai-btn" onclick="speakContent('text-fasi')">Ascolta ✨</button>
+      </div>
+      <div id="res-fasi" class="ai-response"></div>
     </section>
 
     <section class="section" id="pace">
       <h3>La pace</h3>
-      <p>
+      <p id="text-pace">
         I trattati di pace imposero condizioni dure ai vinti, in particolare alla
         Germania, creando un clima di instabilità che avrebbe inciso profondamente
         sulla storia europea.
       </p>
+      <div class="ai-controls">
+        <button class="ai-btn" onclick="deepenContent('pace')">Approfondisci ✨</button>
+        <button class="ai-btn" onclick="speakContent('text-pace')">Ascolta ✨</button>
+      </div>
+      <div id="res-pace" class="ai-response"></div>
     </section>
   </div>
-
 </main>
 
 <footer>
-  <p>© Sito didattico – Prima Guerra Mondiale</p>
+  <p>© Sito didattico – Prima Guerra Mondiale & Gemini AI Integration</p>
 </footer>
 
 <script>
+  const apiKey = ""; // API Key gestita dall'ambiente
+
+  // Funzioni UI Base
   function toggleMenu() {
     document.getElementById('menu').classList.toggle('active');
+    document.getElementById('overlay').classList.toggle('active');
   }
 
-  document.querySelectorAll('nav a').forEach(link => {
-    link.addEventListener('click', () => {
-      document.getElementById('menu').classList.remove('active');
-    });
-  });
+  // --- INTEGRAZIONE GEMINI API ---
 
-  const sections = document.querySelectorAll('.section');
+  // 1. Approfondimento Testuale (Gemini Flash)
+  async function deepenContent(id) {
+    const resDiv = document.getElementById(`res-${id}`);
+    const originalText = document.getElementById(`text-${id}`).innerText;
+    resDiv.style.display = "block";
+    resDiv.innerHTML = "Generazione approfondimento in corso... ✨";
 
+    const prompt = `Sei uno storico esperto. Partendo da questo breve testo: "${originalText}", scrivi un paragrafo di approfondimento di circa 100 parole che aggiunga dettagli storici, curiosità o nomi chiave sulla Prima Guerra Mondiale. Usa un tono accademico ma accessibile.`;
+
+    try {
+      const response = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }]
+        })
+      });
+      const data = await response.json();
+      const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "Errore nella generazione.";
+      resDiv.innerHTML = `<strong>Approfondimento IA:</strong><br>${text}`;
+    } catch (err) {
+      resDiv.innerHTML = "Spiacenti, il servizio di approfondimento non è al momento disponibile.";
+    }
+  }
+
+  // 2. Analisi Immagini (Gemini Vision)
+  async function analyzeImage(input) {
+    if (!input.files || !input.files[0]) return;
+    const file = input.files[0];
+    const resDiv = document.getElementById('image-result');
+    resDiv.style.display = "block";
+    resDiv.innerHTML = "Analisi dell'immagine con IA in corso... ✨";
+
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const base64Data = e.target.result.split(',')[1];
+      
+      try {
+        const response = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{
+              parts: [
+                { text: "Identifica cosa c'è in questa immagine relativa alla Prima Guerra Mondiale e spiegami il suo significato storico." },
+                { inlineData: { mimeType: file.type, data: base64Data } }
+              ]
+            }]
+          })
+        });
+        const data = await response.json();
+        const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "Non sono riuscito ad analizzare l'immagine.";
+        resDiv.innerHTML = `<strong>Analisi Reperto:</strong><br>${text}`;
+      } catch (err) {
+        resDiv.innerHTML = "Errore durante l'analisi dell'immagine.";
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // 3. Sintesi Vocale (Gemini TTS)
+  async function speakContent(textId) {
+    const text = document.getElementById(textId).innerText;
+    
+    try {
+      const response = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "gemini-2.5-flash-preview-tts",
+          contents: [{ parts: [{ text: `In tono narrativo e solenne: ${text}` }] }],
+          generationConfig: {
+            responseModalities: ["AUDIO"],
+            speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Puck" } } }
+          }
+        })
+      });
+      const data = await response.json();
+      const pcmData = data.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+      
+      if (pcmData) {
+        const audioBlob = pcmToWav(pcmData, 24000); // Helper per convertire in WAV
+        const url = URL.createObjectURL(audioBlob);
+        const audio = new Audio(url);
+        audio.play();
+      }
+    } catch (err) {
+      console.error("TTS Error:", err);
+    }
+  }
+
+  // Utility: Fetch con Exponential Backoff
+  async function fetchWithRetry(url, options, retries = 5, backoff = 1000) {
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok && retries > 0) throw new Error();
+      return response;
+    } catch (err) {
+      if (retries === 0) throw err;
+      await new Promise(r => setTimeout(r, backoff));
+      return fetchWithRetry(url, options, retries - 1, backoff * 2);
+    }
+  }
+
+  // Helper: Conversione Base64 PCM a WAV (semplificata)
+  function pcmToWav(base64, sampleRate) {
+    const byteString = atob(base64);
+    const buffer = new ArrayBuffer(byteString.length + 44);
+    const view = new DataView(buffer);
+    
+    const writeString = (offset, string) => {
+      for (let i = 0; i < string.length; i++) view.setUint8(offset + i, string.charCodeAt(i));
+    };
+
+    writeString(0, 'RIFF');
+    view.setUint32(4, 36 + byteString.length, true);
+    writeString(8, 'WAVE');
+    writeString(12, 'fmt ');
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true);
+    view.setUint16(22, 1, true);
+    view.setUint32(24, sampleRate, true);
+    view.setUint32(28, sampleRate * 2, true);
+    view.setUint16(32, 2, true);
+    view.setUint16(34, 16, true);
+    writeString(36, 'data');
+    view.setUint32(40, byteString.length, true);
+
+    for (let i = 0; i < byteString.length; i++) {
+      view.setUint8(44 + i, byteString.charCodeAt(i));
+    }
+    return new Blob([buffer], { type: 'audio/wav' });
+  }
+
+  // Animazioni Scroll
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
+      if (entry.isIntersecting) entry.target.style.opacity = "1", entry.target.style.transform = "translateY(0)";
     });
-  }, { threshold: 0.2 });
+  }, { threshold: 0.1 });
 
-  sections.forEach(section => {
-    observer.observe(section);
+  document.querySelectorAll('.section').forEach(s => {
+    s.style.opacity = "0";
+    s.style.transform = "translateY(30px)";
+    observer.observe(s);
   });
 </script>
-
 </body>
 </html>
