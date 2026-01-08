@@ -81,19 +81,27 @@
       left: 0;
     }
 
+    /* Modifica al contenitore principale */
     main {
-      max-width: 900px;
-      margin: 120px auto 60px;
-      padding: 0 20px;
+      width: 100%;
+      margin-top: 60px; /* Altezza dell'header */
     }
 
+    /* Sezione Hero: sfondo rosso pieno */
     .hero {
       min-height: 70vh;
+      width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
+      background-color: #8b1e1e;
+      padding: 120px 20px;
+      margin-bottom: 100px; /* Sposta i testi sotto più in basso */
+    }
+
+    .hero-title {
       animation: slideUp 1.2s ease-out;
     }
 
@@ -102,22 +110,40 @@
       to { transform: translateY(0); opacity: 1; }
     }
 
-    .hero h2 {
+    .hero-title h2 {
       font-family: 'Playfair Display', serif;
       font-size: 64px;
       font-weight: 700;
-      margin-bottom: 20px;
+      color: #ffffff;
+      margin-bottom: 10px;
     }
 
-    .hero span {
+    /* Date rese esplicitamente bianche */
+    .hero-title span {
       font-size: 18px;
-      color: #666;
+      color: #ffffff !important; 
       letter-spacing: 2px;
       text-transform: uppercase;
+      display: block;
+    }
+
+    /* Contenitore per le sezioni di testo per mantenerle centrate e strette */
+    .content-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
     }
 
     .section {
       margin-bottom: 60px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease;
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .section h3 {
@@ -131,10 +157,11 @@
 
     footer {
       text-align: center;
-      padding: 20px;
+      padding: 40px 20px;
       border-top: 1px solid #e5e5e5;
       color: #666;
       font-size: 14px;
+      margin-top: 60px;
     }
   </style>
 </head>
@@ -158,55 +185,57 @@
 <main id="home">
 
   <section class="hero">
-    <h2>La Grande Guerra</h2>
-    <span>1914 – 1918</span>
+    <div class="hero-title">
+      <h2>La Grande Guerra</h2>
+      <span>1914 – 1918</span>
+    </div>
   </section>
 
-  <section class="section" id="cause">
-    <h3>Origini del conflitto</h3>
-    <p>
-      Alla vigilia del 1914 l’Europa era attraversata da profonde tensioni politiche,
-      economiche e nazionalistiche. Il fragile equilibrio tra le potenze crollò dopo
-      l’attentato di Sarajevo, dando inizio a un conflitto di proporzioni mondiali.
-    </p>
-  </section>
+  <div class="content-wrapper">
+    <section class="section" id="cause">
+      <h3>Origini del conflitto</h3>
+      <p>
+        Alla vigilia del 1914 l’Europa era attraversata da profonde tensioni politiche,
+        economiche e nazionalistiche. Il fragile equilibrio tra le potenze crollò dopo
+        l’attentato di Sarajevo, dando inizio a un conflitto di proporzioni mondiali.
+      </p>
+    </section>
 
-  <section class="section" id="schieramenti">
-    <h3>Gli schieramenti</h3>
-    <p>
-      La guerra vide contrapposti gli Imperi Centrali e la Triplice Intesa,
-      coinvolgendo progressivamente numerosi Stati e trasformando una crisi locale
-      in una guerra globale.
-    </p>
-  </section>
+    <section class="section" id="schieramenti">
+      <h3>Gli schieramenti</h3>
+      <p>
+        La guerra vide contrapposti gli Imperi Centrali e la Triplice Intesa,
+        coinvolgendo progressivamente numerosi Stati e trasformando una crisi locale
+        in una guerra globale.
+      </p>
+    </section>
 
-  <section class="section" id="italia">
-    <h3>L’Italia nella guerra</h3>
-    <p>
-      Dopo una fase di neutralità, l’Italia entrò in guerra nel 1915 a fianco
-      dell’Intesa, affrontando un conflitto lungo e logorante soprattutto sul fronte
-      alpino.
-    </p>
-  </section>
+    <section class="section" id="italia">
+      <h3>L’Italia nella guerra</h3>
+      <p>
+        Dopo una fase di neutralità, l’Italia entrò in guerra nel 1915 a fianco
+        dell’Intesa, affrontando un conflitto lungo e logorante soprattutto sul fronte
+        alpino.
+      </p>
+    </section>
 
-  <section class="section" id="fasi">
-    <h3>Le fasi del conflitto</h3>
-    <p>
-      Fallita la guerra lampo, il conflitto si trasformò in una guerra di posizione
-      caratterizzata da trincee, logoramento e mobilitazione industriale.
-    </p>
-  </section>
+    <section class="section" id="fasi">
+      <h3>Le fasi del conflitto</h3>
+      <p>
+        Fallita la guerra lampo, il conflitto si trasformò in una guerra di posizione
+        caratterizzata da trincee, logoramento e mobilitazione industriale.
+      </p>
+    </section>
 
-  <section class="section" id="pace">
-    <h3>La pace</h3>
-    <p>
-      I trattati di pace imposero condizioni dure ai vinti, in particolare alla
-      Germania, creando un clima di instabilità che avrebbe inciso profondamente
-      sulla storia europea.
-    </p>
-  </section>
-
-  
+    <section class="section" id="pace">
+      <h3>La pace</h3>
+      <p>
+        I trattati di pace imposero condizioni dure ai vinti, in particolare alla
+        Germania, creando un clima di instabilità che avrebbe inciso profondamente
+        sulla storia europea.
+      </p>
+    </section>
+  </div>
 
 </main>
 
@@ -219,11 +248,24 @@
     document.getElementById('menu').classList.toggle('active');
   }
 
-  // Chiude il menu dopo il click su un link
   document.querySelectorAll('nav a').forEach(link => {
     link.addEventListener('click', () => {
       document.getElementById('menu').classList.remove('active');
     });
+  });
+
+  const sections = document.querySelectorAll('.section');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  sections.forEach(section => {
+    observer.observe(section);
   });
 </script>
 
