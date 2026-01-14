@@ -5,226 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>La Prima Guerra Mondiale</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: "Segoe UI", Roboto, Arial, sans-serif;
-      background-color: #ffffff;
-      color: #222;
-      line-height: 1.6;
-      animation: fadeIn 1s ease-in;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    /* Header */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 60px;
-      background-color: #ffffff;
-      border-bottom: 1px solid #e5e5e5;
-      display: flex;
-      align-items: center;
-      padding: 0 20px;
-      z-index: 1000;
-    }
-
-    .hamburger {
-      font-size: 24px;
-      cursor: pointer;
-      margin-right: 20px;
-      color: #222;
-      transition: text-shadow 0.3s ease, transform 0.2s ease;
-      display: inline-block;
-      padding: 5px;
-    }
-
-    /* Bagliore per l'hamburger */
-    .hamburger:hover {
-      text-shadow: 0 0 10px rgba(139, 30, 30, 0.8);
-      transform: scale(1.1);
-    }
-
-    header h1 {
-      font-size: 18px;
-      font-weight: 600;
-    }
-
-    /* Menu Navigazione */
-    nav {
-      position: fixed;
-      top: 0;
-      left: -280px;
-      width: 280px;
-      height: 100%;
-      background-color: #111;
-      transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 1100;
-      box-shadow: 5px 0 15px rgba(0,0,0,0.3);
-      display: flex;
-      flex-direction: column;
-    }
-
-    nav.active {
-      left: 0;
-    }
-
-    .close-menu {
-      align-self: flex-end;
-      font-size: 30px;
-      color: #fff;
-      padding: 15px 20px;
-      cursor: pointer;
-      line-height: 1;
-      transition: text-shadow 0.3s ease, color 0.3s ease;
-    }
-
-    /* Bagliore per tasto chiusura */
-    .close-menu:hover {
-      color: #ff4d4d;
-      text-shadow: 0 0 15px rgba(255, 77, 77, 0.9);
-    }
-
-    nav a {
-      display: block;
-      padding: 16px 25px;
-      color: #f1f1f1;
-      text-decoration: none;
-      font-size: 16px;
-      border-bottom: 1px solid #222;
-      transition: all 0.3s ease;
-    }
-
-    /* Bagliore per i link del menu */
-    nav a:hover {
-      background-color: #1f1f1f;
-      padding-left: 35px;
-      color: #fff;
-      text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
-      box-shadow: inset 5px 0 0 #8b1e1e;
-    }
-
-    /* Overlay */
-    .menu-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      display: none;
-      z-index: 1050;
-    }
-
-    .menu-overlay.active {
-      display: block;
-    }
-
-    /* Layout Principale */
-    main {
-      width: 100%;
-      margin-top: 60px;
-    }
-
-    .hero {
-      min-height: 70vh;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      background-color: #8b1e1e;
-      padding: 120px 20px;
-      margin-top: -60px;
-      padding-top: 180px; 
-      margin-bottom: 100px;
-    }
-
-    .hero-title h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(40px, 8vw, 64px);
-      font-weight: 700;
-      color: #ffffff;
-      margin-bottom: 10px;
-    }
-
-    .hero-title span {
-      font-size: 18px;
-      color: #ffffff;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      display: block;
-    }
-
-    .content-wrapper {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    .section {
-      margin-bottom: 80px;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s ease;
-    }
-
-    .section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .section h3 {
-      font-size: 26px;
-      font-family: 'Playfair Display', serif;
-      margin-bottom: 15px;
-      color: #111;
-      border-bottom: 2px solid #8b1e1e;
-      display: inline-block;
-      padding-bottom: 5px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 50px 20px;
-      background-color: #f9f9f9;
-      border-top: 1px solid #e5e5e5;
-      color: #777;
-      font-size: 14px;
-      margin-top: 80px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
-  <div class="hamburger" onclick="toggleMenu()" title="Apri menu">☰</div>
+  <div class="hamburger" onclick="toggleMenu()">☰</div>
   <h1>Prima Guerra Mondiale</h1>
 </header>
 
 <div class="menu-overlay" id="overlay" onclick="toggleMenu()"></div>
 
 <nav id="menu">
-  <div class="close-menu" onclick="toggleMenu()" title="Chiudi menu">×</div>
+  <div class="close-menu" onclick="toggleMenu()">×</div>
   <a href="#home">Home</a>
   <a href="#cause">Cause</a>
   <a href="#schieramenti">Schieramenti</a>
   <a href="#italia">Italia</a>
   <a href="#fasi">Fasi</a>
   <a href="#pace">La pace</a>
-  <a href="quiz.html" style="color: #ff4d4d; font-weight: bold; text-shadow: 0 0 5px rgba(255, 77, 77, 0.3);">Quiz</a>
+  <a href="quiz.html" class="quiz-link">Quiz</a>
 </nav>
 
 <main id="home">
@@ -236,49 +36,11 @@
   </section>
 
   <div class="content-wrapper">
-    <section class="section" id="cause">
-      <h3>Origini del conflitto</h3>
-      <p>
-        Alla vigilia del 1914 l’Europa era attraversata da profonde tensioni politiche,
-        economiche e nazionalistiche. Il fragile equilibrio tra le potenze crollò dopo
-        l’attentato di Sarajevo, dando inizio a un conflitto di proporzioni mondiali.
-      </p>
-    </section>
-
-    <section class="section" id="schieramenti">
-      <h3>Gli schieramenti</h3>
-      <p>
-        La guerra vide contrapposti gli Imperi Centrali e la Triplice Intesa,
-        coinvolgendo progressivamente numerosi Stati e trasformando una crisi locale
-        in una guerra globale.
-      </p>
-    </section>
-
-    <section class="section" id="italia">
-      <h3>L’Italia nella guerra</h3>
-      <p>
-        Dopo una fase di neutralità, l’Italia entrò in guerra nel 1915 a fianco
-        dell’Intesa, affrontando un conflitto lungo e logorante soprattutto sul fronte
-        alpino.
-      </p>
-    </section>
-
-    <section class="section" id="fasi">
-      <h3>Le fasi del conflitto</h3>
-      <p>
-        Fallita la guerra lampo, il conflitto si trasformò in una guerra di posizione
-        caratterizzata da trincee, logoramento e mobilitazione industriale.
-      </p>
-    </section>
-
-    <section class="section" id="pace">
-      <h3>La pace</h3>
-      <p>
-        I trattati di pace imposero condizioni dure ai vinti, in particolare alla
-        Germania, creando un clima di instabilità che avrebbe inciso profondamente
-        sulla storia europea.
-      </p>
-    </section>
+    <section class="section" id="cause"><h3>Origini del conflitto</h3><p>Testo...</p></section>
+    <section class="section" id="schieramenti"><h3>Gli schieramenti</h3><p>Testo...</p></section>
+    <section class="section" id="italia"><h3>L’Italia nella guerra</h3><p>Testo...</p></section>
+    <section class="section" id="fasi"><h3>Le fasi del conflitto</h3><p>Testo...</p></section>
+    <section class="section" id="pace"><h3>La pace</h3><p>Testo...</p></section>
   </div>
 </main>
 
@@ -287,30 +49,14 @@
 </footer>
 
 <script>
-  function toggleMenu() {
-    const menu = document.getElementById('menu');
-    const overlay = document.getElementById('overlay');
-    menu.classList.toggle('active');
-    overlay.classList.toggle('active');
-  }
-
-  document.querySelectorAll('nav a').forEach(link => {
-    link.addEventListener('click', () => {
-      document.getElementById('menu').classList.remove('active');
-      document.getElementById('overlay').classList.remove('active');
-    });
-  });
-
-  const sections = document.querySelectorAll('.section');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1 });
-
-  sections.forEach(s => observer.observe(s));
+function toggleMenu() {
+  document.getElementById('menu').classList.toggle('active');
+  document.getElementById('overlay').classList.toggle('active');
+}
+const sections=document.querySelectorAll('.section');
+const observer=new IntersectionObserver(e=>{e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible')})},{threshold:.1});
+sections.forEach(s=>observer.observe(s));
 </script>
+
 </body>
 </html>
